@@ -1,0 +1,18 @@
+#postForm{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: auto;
+    align-items: center;
+}
+
+input{
+    margin:10px;
+}
+
+button{
+    width: 100px;
+    background-color: black;
+    color: white;
+    border-radius: 24px;
+}

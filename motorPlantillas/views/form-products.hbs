@@ -1,0 +1,72 @@
+<h1>INPUT NEW PRODUCTS</h1>
+<div class="formContainer">
+    <form action="/products" method="post">
+        <label for="title">TITLE</label>
+        <input type="text" name="title" placeholder="Grey Gardens">
+        <label for="price">PRICE</label>
+        <input type="text" name="price" placeholder="20.000"/>
+        <label for="thumbnail">IMAGE URL</label>
+        <input type="text" name="thumbnail" placeholder="https://gatosyrespeto.com/2019/07/"/>
+        <button class="submitBtn">Send Item</button>
+    </form>
+</div>
+<div>
+    <a href="/products"><button class="button">Go to items</button></a>
+</div>
+<style>
+    body{
+        background-color: black;
+    }
+    h1{
+        text-align: center;
+        color: white;
+    }
+    .formContainer{
+        display: flex;
+        margin: auto;
+        flex: column;
+        width: 500px;
+        height: 500px;
+        background: linear-gradient(127deg, rgba(242,235,235,1) 6%, rgba(181,8,43,1) 89%, rgba(186,8,8,0.6643032212885154) 100%, rgba(0,212,255,1) 100%);
+        border-radius: 24px;
+        align-items: center;
+        justify-content: center;
+    }
+    input{
+        display: block;
+        margin: auto;
+        padding: 1rem;
+    }
+    ::placeholder {
+   text-align: center; 
+}
+    label{
+        margin-top: 10px;
+    display: block;
+    text-align: center;
+    line-height: 150%;
+    font-size: 1em;
+    font-weight: bold;
+
+    }
+
+    .button{
+        background-color: white;
+        color: white;
+        padding: 1rem;
+        margin-top: 10px;
+        color: black;
+        margin-left: 46%;
+    }
+
+    .submitBtn{
+        margin-left: 50px;
+        background-color: black;
+        color: white;
+        padding: 0.8rem;
+        margin-top: 15px;
+    }
+    button{
+        border-radius: 8px;
+    }
+</style>

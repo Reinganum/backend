@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/socket.io/socket.io.js" ></script>
+    <link rel="stylesheet" href="./assets/styles.css">
+    <title>Messaging App</title>
+</head>
+
+<body>
+    <h1>INPUT NEW PRODUCTS</h1>
+    <div class="formContainer">
+      <form id="itemForm">
+        <label for="title">TITLE</label>
+        <input type="text" name="title" placeholder="Grey Gardens">
+        <label for="price">PRICE</label>
+        <input type="text" name="price" placeholder="20.000"/>
+        <label for="thumbnail">IMAGE URL</label>
+        <input type="text" name="thumbnail" placeholder="https://gatosyrespeto.com/2019/07/"/>
+        <button type="submit">Send Item</button>
+      </form>
+    </div>
+    <div id="itemContainer">
+    </div>
+    <div id="chat">
+        <h1 id="title">Chat</h1>
+        <div id="msgContainer">
+        </div>
+        <form id="chatForm">
+          <input type="text" name="textMsg" placeholder="Message" id="msgInput">
+          <button type="submit" id="msgSubmit">Enviar</button>
+        </form>
+      </div>
+      <script src="main.js" ></script>
+</body>
+</html>

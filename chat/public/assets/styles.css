@@ -1,0 +1,13 @@
+body{
+    background-color: yellow;
+}
+
+#msgContainer{
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+    overflow-y: scroll;
+    background-color: blue;
+    height: 60vh;
+    border-radius: 24px;
+}

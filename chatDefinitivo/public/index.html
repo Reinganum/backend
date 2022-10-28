@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Application</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+    <script src="/socket.io/socket.io.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+</head>
+<body>
+    <h1>INPUT NEW PRODUCTS</h1>
+    <div class="formContainer">
+        <form>
+            <label for="title">TITLE</label>
+            <input type="text" name="title" placeholder="Grey Gardens" id="title">
+            <label for="price">PRICE</label>
+            <input type="text" name="price" placeholder="20.000" id="price"/>
+            <label for="thumbnail">IMAGE URL</label>
+            <input type="text" name="thumbnail" id="thumbnail" placeholder="https://gatosyrespeto.com/2019/07/"/>
+            <button class="submitBtn" id="submitItem">Send Item</button>
+        </form>
+    </div>
+    <div id="itemsContainer">
+        <!-- productos de handlebars-->
+    </div>
+    <div id="chat-container">
+        <div id="chat-window">
+            
+        </div>
+        <div id="chat-events">
+        </div>
+        <input type="text" id="message" class="hidden" placeholder="Type your message here!">
+        <input type="text" id="nickname" placeholder="set nickname or email" maxlength="25">
+        <div id="btnContainer">
+            <button id="send" class="hidden">send</button>
+            <button id="nicknameBtn">set name</button>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,11 +1,16 @@
 const Items = require('../containers/productContainer/productContainer')
+const productDatabase=require('../containers/productContainer/productContainer')
 
-const newItem=async(socket, io, newItem)=>{
-    await Items.save(newItem)
-    const allItems=await Items.getAll()
-    io.sockets.emit('items',allItems)
+
+const newProduct=async(socket,io,newItem)=>{
+    productDatabase.save(newItem)
+    .then(rowId=>{
+        productDatabase.getAll()
+        .then(allItems=>{io.sockets.emit('items',allItems)})
+    })
+    .catch(error=>{console.log(error)})
 }
 
 module.exports={
-    newItem
+    newProduct
 }

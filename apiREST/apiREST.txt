@@ -1,0 +1,1 @@
+[{"title":"El laberinto del minotauro","price":7000,"id":1},{"title":"El anillo de los nibelungos","price":8000,"id":2},{"title":"pirihueico","price":12000,"id":3}]

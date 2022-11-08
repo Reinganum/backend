@@ -113,7 +113,6 @@ const getNameBySocketId =(socket) =>{
 const paintMsg = (msg) => {
     const msgClass = (msg.socketID === socket.id) ? "ownMsg" : "othersMsg"
     let userNickname=getNameBySocketId(msg.socketID)
-    console.log(userNickname)
     const chatOwnerContent = (msg.socketID === socket.id) ? "Me" : userNickname
     const chatMsg = document.createElement("div")
     const chatOwner = document.createElement("p")
@@ -128,3 +127,5 @@ const paintMsg = (msg) => {
     chatMsg.appendChild(chatDate)
     chatWindow.appendChild(chatMsg)
   }
+
+  

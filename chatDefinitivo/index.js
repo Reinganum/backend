@@ -19,7 +19,10 @@ const ItemsContainer=require('./containers/productContainer/productContainer')
 // require handlers
 const {newUser,changeUser} = require('./handlers/userHandler')
 const {newMessage} = require('./handlers/messageHandler')
-const {newItem}=require('./handlers/itemHandler')
+const {newItem, newProduct}=require('./handlers/itemHandler')
+const { table } = require('console')
+const { knexSql } = require('./containers/connect')
+const msgDatabase=require('./containers/messageContainer/messageContainer')
 // websockets
 
 io.on('connection', async (socket)=>{
@@ -39,6 +42,6 @@ io.on('connection', async (socket)=>{
         socket.broadcast.emit('typing',user)
     })
     socket.on('newItem',(itemData)=>{
-        newItem(socket,io,itemData)
+        newProduct(socket,io,itemData)
     })
 })

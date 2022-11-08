@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path')
+const knexSql=require('./connect')
 
 class ContainerMemory{
     constructor(file) {

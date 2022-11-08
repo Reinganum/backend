@@ -1,5 +1,8 @@
-const Container = require('../containerMemory')
+const {knexSqlite3} = require('../connect');
+const DbCRUD = require('../dbCRUD')
 
-const MsgContainer=new Container('message')
+const msgDatabase=new DbCRUD(knexSqlite3,'msgdatabase')
+msgDatabase.newTable('socketID','msg','time')
 
-module.exports = MsgContainer
+
+module.exports = msgDatabase

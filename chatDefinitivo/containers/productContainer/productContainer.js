@@ -1,5 +1,7 @@
-const ProductContainer=require('../containerMemory')
+const { knexSql } = require('../connect');
+const DbCRUD = require('../dbCRUD');
 
-const ItemContainer=new ProductContainer("items")
+const productDatabase=new DbCRUD(knexSql,'newProducts')
+productDatabase.newTable('title','price','thumbnail')
 
-module.exports=ItemContainer;
+module.exports=productDatabase

@@ -1,4 +1,3 @@
-
 const express = require('express')
 const path = require('path')
 const {Server:HttpServer}=require('http')
@@ -6,6 +5,8 @@ const {Server: SocketIOServer } = require('socket.io')
 const app = express()
 const httpServer = new HttpServer(app)
 const io = new SocketIOServer(httpServer)
+const router = require('./routers/mockRouter')
+
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -14,15 +15,13 @@ httpServer.listen(PORT, ()=>{
     console.log(`server running on port: ${PORT}`)
 })
 
+app.use('/api/products-test',router)
 const ItemsContainer=require('./containers/productContainer/productContainer')
 
 // require handlers
 const {newUser,changeUser} = require('./handlers/userHandler')
 const {newMessage} = require('./handlers/messageHandler')
 const {newItem, newProduct}=require('./handlers/itemHandler')
-const { table } = require('console')
-const { knexSql } = require('./containers/connect')
-const msgDatabase=require('./containers/messageContainer/messageContainer')
 // websockets
 
 io.on('connection', async (socket)=>{
@@ -45,3 +44,4 @@ io.on('connection', async (socket)=>{
         newProduct(socket,io,itemData)
     })
 })
+

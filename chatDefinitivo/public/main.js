@@ -14,7 +14,11 @@ let message=document.getElementById('message');
 let nickname=document.getElementById('nickname');
 let nicknameBtn=document.getElementById('nicknameBtn');
 let chatEvents=document.getElementById('chat-events')
-
+let nombre = document.getElementById('nombre')
+let apellido = document.getElementById('apellido')
+let edad = document.getElementById('edad')
+let avatar = document.getElementById('avatar')
+let mail=document.getElementById('mail')
 
 // PRODUCTS
 
@@ -40,13 +44,35 @@ const displayItemTable=async(items)=>{
     return templateCompiled({ items });
 }
 
+function getMock(){
+    const mockContainer=document.getElementById('mockContainer')
+    const mockItems=fetch('/api/products-test')
+    .then((response)=>{
+        response.json()
+    .then((data)=>{
+        console.log(data)
+    })
+})
+}
+
+getMock()
+
 socket.on("items", async (items) => {
     const template = await displayItemTable(items);
     document.getElementById("itemsContainer").innerHTML = template;
   });
 
 sendBtn.addEventListener('click', ()=>{
-    let msg=(message.value);
+    let author={
+        id:mail.value,
+        nombre:nombre.value,
+        apellido:apellido.value,
+        edad:edad.value,
+        alias:nickname.value,
+        avatar:avatar.value
+    }
+    let text=message.value
+    let msg={author,text};
     socket.emit('msg', msg)
 })
 
@@ -86,6 +112,11 @@ nicknameBtn.addEventListener('click', (e)=>{
         sendBtn.removeAttribute('class','hidden')
         nicknameBtn.setAttribute('class','hidden')
         nickname.setAttribute('class','hidden')
+        nombre.setAttribute('class','hidden')
+        apellido.setAttribute('class','hidden')
+        avatar.setAttribute('class','hidden')
+        edad.setAttribute('class','hidden')
+        mail.setAttribute('class','hidden')
     }
 })
 
@@ -111,9 +142,9 @@ const getNameBySocketId =(socket) =>{
 // nuevo render
 
 const paintMsg = (msg) => {
-    const msgClass = (msg.socketID === socket.id) ? "ownMsg" : "othersMsg"
-    let userNickname=getNameBySocketId(msg.socketID)
-    const chatOwnerContent = (msg.socketID === socket.id) ? "Me" : userNickname
+    const msgClass = (msg.author.id === socket.id) ? "ownMsg" : "othersMsg"
+    let userNickname=getNameBySocketId(msg.author.id)
+    const chatOwnerContent = (msg.author.id === socket.id) ? "Me" : userNickname
     const chatMsg = document.createElement("div")
     const chatOwner = document.createElement("p")
     const chatDate = document.createElement("p")
@@ -123,7 +154,7 @@ const paintMsg = (msg) => {
     chatOwner.innerHTML = chatOwnerContent
     chatDate.innerHTML = msg.time
     chatMsg.appendChild(chatOwner)
-    chatMsg.innerHTML = chatMsg.innerHTML + msg.msg
+    chatMsg.innerHTML = chatMsg.innerHTML + msg.text
     chatMsg.appendChild(chatDate)
     chatWindow.appendChild(chatMsg)
   }

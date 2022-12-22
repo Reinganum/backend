@@ -6,6 +6,7 @@ const PORT=8080
 const router=require('./routers/index')
 const Mongostore=require('connect-mongo')
 const advancedOptions={useNewUrlParser:true,useUnifiedTopology:true}
+const User=require('./crud/mongoCRUD')
 app.use(session({
     store:Mongostore.create({
         //mongoUrl:'mongodb+srv://harijanF:NGC654e.@cluster0.mdmbmnr.mongodb.net/?retryWrites=true',
@@ -26,7 +27,7 @@ app.use('/', router)
 app.listen(PORT, ()=>{
     console.log(`el servidor esta escuchando en el puerto ${PORT}`)
 })
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({extended:false}))
 app.engine('.hbs', engine({
     extname:'.hbs'
 }));
@@ -34,3 +35,4 @@ app.set('views', './views');
 app.set('view engine', '.hbs');
 app.use(express.static('views'));
 
+User.save({name:"hari"})

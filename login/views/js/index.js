@@ -2,7 +2,7 @@ console.log("script connected")
 const button = document.getElementById('redirect')
 
 button.addEventListener('click',()=>{
-    location.href='http://localhost:8080/forget'
+    location.href='http://localhost:8080/logout'
 })
 
 function volverLogin(){

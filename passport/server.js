@@ -1,8 +1,8 @@
 const express=require('express');
 const router=require('./routes/index')
 const userRouter=require('./routes/users')
+const apiRouter=require('./routes/api')
 const app=express();
-const PORT=process.env.PORT||8080;
 const {engine} = require('express-handlebars')
 const mongoose=require('mongoose') 
 const keys=require('./config/keys')
@@ -11,6 +11,21 @@ const Mongostore=require('connect-mongo')
 const advancedOptions={useNewUrlParser:true,useUnifiedTopology:true}
 const passport=require('passport')
 const strategy=require('./passport/strategy')
+require('dotenv').config({path:'./.env'})
+
+// MINIMIST (SE PUEDE ESCOGER PUERTO O CORRER CON SCRIPT TEST EN PUERTO 3000)
+
+const parseArgs = require('minimist');
+const { MongoURI } = require('./config/keys');
+
+const options={
+    alias:{
+        p:'port'
+    } 
+}
+const arg=parseArgs(process.argv.slice(2),options)
+const PORT=arg.p||8080;
+
 
 // strategy
 
@@ -32,9 +47,11 @@ app.use(express.urlencoded({extended:false}))
 
 // SESSION 
 
+console.log(process.env.MongoURI)
+
 app.use(session({
     store:Mongostore.create({
-        mongoUrl:'mongodb+srv://harijanF:NGC654e.@cluster0.mdmbmnr.mongodb.net/?retryWrites=true',
+        mongoUrl:process.env.MongoURI,
         mongoOptions:advancedOptions,
         ttl:60,
         collectionName:'sessions'
@@ -59,4 +76,5 @@ mongoose.connect(db)
 
 app.use('/', router)
 app.use('/user', userRouter)
+app.use('/api',apiRouter)
 app.listen(PORT, ()=>console.log(`server running on: ${PORT}`))

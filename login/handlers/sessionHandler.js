@@ -26,6 +26,10 @@ const forget=(req,res)=>{
     }
 }
 
+const register=(req,res)=>{
+    res.render('register')
+}
+
 /*
 if(req.session.counter){
         req.session.counter++;
@@ -39,4 +43,4 @@ if(req.session.counter){
     }
 */
 
-module.exports={main,forget,logUsername}
+module.exports={main,forget,logUsername,register}

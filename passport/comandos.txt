@@ -1,0 +1,25 @@
+// me surgieron hartas dudas pero te las envio por chat
+
+Comandos:
+
+1) si ejecuto "node server.js" o "node server.js -m (algo)" las consultas a api/randoms se resuelven con fork a 
+child process.
+
+2) si ejecuto "node server.js -m cluster" la ruta api/randoms redirige al puerto 8081, debo inicializar el
+cluster de servidores que escucha en ese puerto con comando "node cluster.js".
+
+3) para manejar la ruta en modo fork desde pm2 usar "pm2 start pm2.js"  o en cluster "pm2 start pm2.js -i max"
+en caso de querer escuchar cambios  "pm2 start pm2.js -i max --watch". se pueden visualizar procesos con pm2 list
+y ps en cli
+
+con Nginx: 
+
+1) levanto cluster de servidores con node nativo usando "node cluster.js" las consultas a localhost/api/randoms
+las redirige ngnix a alguno de los nucleos escuchando localhost:8081.
+
+2) para balancear entre distintos puertos de escucha levanto cuatro instancias pasando distintos puertos y el 
+proxy de ngnix los distribuye
+"node start cluster.js 8081"
+"node start cluster.js 8082"
+"node start cluster.js 8083"
+"node start cluster.js 8084" 

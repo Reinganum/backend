@@ -1,6 +1,7 @@
 const express=require('express')
 const router=express.Router()
 const checkAuthenticated=require('../passport/auth')
+const cpus=require('os').cpus()
 
 router.get('/', (req,res)=>{
     res.render('index')
@@ -20,7 +21,9 @@ router.get('/info',(req,res)=>{
         pid:process.pid,
          "node version":process.version,
         "ruta archivo":process.argv[1],
-        "carpeta root":process.cwd()})
+        "carpeta root":process.cwd(),
+        "NUMERO DE CPUS": `${cpus.length}`
+    })
 })
 
 const args = process.argv.slice(2)

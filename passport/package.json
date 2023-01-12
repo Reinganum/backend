@@ -6,14 +6,19 @@
   "scripts": {
     "start": "node server.js -p",
     "dev": "nodemon server.js",
-    "test": "node server.js -p 3000"
+    "test": "node server.js -p 3000",
+    "prod": "node server.js -l prod",
+    "start0x": "0x server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "autocannon": "^7.10.0",
     "bcrypt": "^5.1.0",
+    "compression": "^1.7.4",
     "connect-mongo": "^4.6.0",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-handlebars": "^6.0.6",
@@ -21,6 +26,8 @@
     "minimist": "^1.2.7",
     "mongoose": "^6.8.0",
     "passport": "^0.6.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "pino": "^8.8.0",
+    "winston": "^3.8.2"
   }
 }

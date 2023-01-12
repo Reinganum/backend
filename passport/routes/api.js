@@ -16,7 +16,10 @@ console.log(`el servidor se ha inicializado en modo: ${mode==="cluster"?mode:"fo
 router.get('/randoms', (req,res)=>{
     if(mode==="cluster"){
         res.redirect(('http://localhost:8081/api/randoms'))
-    } else {
+    } /* 
+    CHILD PROCESS RANDOMS DESACTIVADA
+    else {
+        
         const child=fork('./factory/random.js')
         if (req.query.cant){
             child.send(req.query.cant);
@@ -25,9 +28,11 @@ router.get('/randoms', (req,res)=>{
         }
         child.on('message',(nums)=>{
             res.send({"numeros aleatorios generados en FORK":nums})
-        })
-    }
-})
+            
+        }) 
+        */
+    })
+    
 
 
 

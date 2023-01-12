@@ -1,9 +1,9 @@
-const express=require('express');
+const express=require('express')
+const cookieParser=require('cookie-parser')
 const router=require('./routes/index')
 const userRouter=require('./routes/users')
 const apiRouter=require('./routes/api')
 const app=express();
-const app2=express();
 const {engine} = require('express-handlebars')
 const mongoose=require('mongoose') 
 const keys=require('./config/keys')
@@ -12,6 +12,8 @@ const Mongostore=require('connect-mongo')
 const advancedOptions={useNewUrlParser:true,useUnifiedTopology:true}
 const passport=require('passport')
 const strategy=require('./passport/strategy')
+const logger = require('./config/logger')
+const loggerWinston=require('./config/winston')
 require('dotenv').config({path:'./.env'})
 
 
@@ -22,14 +24,18 @@ const parseArgs = require('minimist');
 const options={
     alias:{
         p:'port',
-        m:'mode' // fork o cluster
+        m:'mode', // fork o cluster
+        l:'prod' // logger production
     } 
 }
+
 const arg=parseArgs(process.argv.slice(2),options)
 const PORT=arg.p||8080;
-app.listen(PORT,()=>{
-    console.log(`SERVIDOR ON ${PORT} - PID ${process.pid}`)
+const server = app.listen(PORT,()=>{
+    logger.info(`Servidor express escuchando en el puerto ${PORT}`)
 })
+
+server.on('error',(e)=>loggerWinston.error(`Server error: ${e}`))
 
 // strategy
 
@@ -69,9 +75,19 @@ app.use(passport.session());
 
 const db=keys.MongoURI;
 mongoose.connect(db)
-.then(()=>console.log('Connected to MongoDB'))
-.catch((e)=>console.log(`failed to connect ${e}`))
+.then(()=>logger.info("connected to MongoDB"))
+.catch((e)=>loggerWinston.error(`could not connect to database: ${e}`))
+
 
 app.use('/',router)
 app.use('/user', userRouter)
 app.use('/api',apiRouter)
+
+app.get('*', (req, res) => {
+    const { url, method } = req
+    logger.warn(`The Route ${method} ${url} has not been created`)
+    res.send(`The following route ${method} ${url} does not exist`)
+  })
+
+
+

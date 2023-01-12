@@ -1,18 +1,14 @@
 const LocalStrategy=require('passport-local').Strategy;
-const mongoose=require('mongoose');
 const bcrypt=require('bcrypt');
 const User=require('../models/users')
-const passport=require('passport')
+const logger=require('../config/logger')
+const winston=require('../config/winston')
 
 // compare hashing
 
 const validatePassword = (user, password) => {
 	return bcrypt.compareSync(password, user.password);
 };
-
-const login=(req, username, password, done)=>{
-
-}
 
 module.exports=(passport)=>{
     passport.use(
@@ -21,19 +17,19 @@ module.exports=(passport)=>{
             .then(user=>{
                 // check if user exists
                 if(!user){
-                    console.log("email doesnt match any user")
+                    logger.info("Passport Strategy: email doesnt match any user")
                     return done(null,false, {message:"email not registered"})
                 
                 // check if password is correct 
                 } else if (!validatePassword(user,password)){
-                    console.log("passwords don't match")
+                    logger.info("Passport Strategy: passwords don't match")
                     return done(null,false, {message:"passwords don't match"})
                 } else {
                     return done(null,user)
                 }
             })
             .catch(e=>{
-                console.log(`error: ${e}`)
+                winston.error(`error in passport Strategy: ${e}`)
             })
             
         })  

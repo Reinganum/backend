@@ -6,11 +6,9 @@ const PORT=8080
 const router=require('./routers/index')
 const Mongostore=require('connect-mongo')
 const advancedOptions={useNewUrlParser:true,useUnifiedTopology:true}
-const User=require('./crud/mongoCRUD')
 app.use(session({
     store:Mongostore.create({
-        //mongoUrl:'mongodb+srv://harijanF:NGC654e.@cluster0.mdmbmnr.mongodb.net/?retryWrites=true',
-        mongoUrl:'mongodb://localhost:27017',
+        mongoUrl:'mongodb+srv://harijanF:NGC654e.@cluster0.mdmbmnr.mongodb.net/?retryWrites=true',
         mongoOptions:advancedOptions,
         ttl:60,
         collectionName:'sessions'
@@ -34,5 +32,3 @@ app.engine('.hbs', engine({
 app.set('views', './views');
 app.set('view engine', '.hbs');
 app.use(express.static('views'));
-
-User.save({name:"hari"})

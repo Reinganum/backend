@@ -3,11 +3,15 @@ const router=express.Router()
 const User=require('../models/users')
 const bcrypt=require('bcrypt')
 const passport=require('passport')
-
+const winston=require('../config/winston')
 // hashing (mover a handlers)
 
 const createHash = (pass)=> {
-	return bcrypt.hashSync(pass, bcrypt.genSaltSync(10), null);
+    try{
+        return bcrypt.hashSync(pass, bcrypt.genSaltSync(10), null);
+    } catch (error){
+        winston.error(`Error hashing password ${error}`)
+    }
 };
 
 
@@ -23,9 +27,10 @@ router.get('/logout',(req,res)=>{
     try{
         const name=req.session.name
         req.session.destroy();
-        res.render('farewell',{name:req.user.username})
+        res.render('farewell',{name:name})
     }
     catch(error){
+        winston.error(`Could not logout, error: error`)
         res.status(500).send(`could not logout, error: ${error}`)
     }
 }
@@ -68,9 +73,16 @@ router.post('/register', (req,res)=>{
                     password,
                 })
                 newUser.password=createHash(password)
-                newUser.save()
+                try{
+                    newUser.save()  
+                } catch (error){
+                    winston.error(`Error creating user ${error}`)
+                }
                 res.redirect('/user/login')
             }
+        })
+        .catch((error)=>{
+            winston.error(`Could not register user ${error}`)
         })
     }
 })
